@@ -1,0 +1,108 @@
+{
+ "generated_at": "2026-11-20T10:38:35+00:00",
+ "ai": false,
+ "model": "extractive",
+ "articles": 102,
+ "categories": [
+  {
+   "slug": "smr",
+   "name": "SMR",
+   "full": "Small modular reactors"
+  },
+  {
+   "slug": "tech",
+   "name": "Technology",
+   "full": "New technologies"
+  },
+  {
+   "slug": "startups",
+   "name": "Companies",
+   "full": "New companies and startups"
+  },
+  {
+   "slug": "policy",
+   "name": "Policy",
+   "full": "Regulation and strategy"
+  }
+ ],
+ "sources": [
+  {
+   "slug": "atomic-energy",
+   "name": "Atomic Energy 2.0 (RU)",
+   "url": "https://www.atomic-energy.ru/news/rss.xml",
+   "homepage": "https://www.atomic-energy.ru",
+   "kind": "rss",
+   "lang": "ru",
+   "builtin": 1,
+   "enabled": 1,
+   "last_fetch": "2026-11-20T10:38:33+00:00",
+   "last_error": null,
+   "articles": 10
+  },
+  {
+   "slug": "ec-smr",
+   "name": "European Commission · SMR",
+   "url": "https://energy.ec.europa.eu/topics/nuclear-energy/small-modular-reactors_en",
+   "homepage": "https://energy.ec.europa.eu",
+   "kind": "html",
+   "lang": "en",
+   "builtin": 1,
+   "enabled": 1,
+   "last_fetch": "2026-11-20T10:38:33+00:00",
+   "last_error": null,
+   "articles": 5
+  },
+  {
+   "slug": "nucnet",
+   "name": "NucNet",
+   "url": "https://www.nucnet.org/feed.rss",
+   "homepage": "https://www.nucnet.org",
+   "kind": "rss",
+   "lang": "en",
+   "builtin": 1,
+   "enabled": 1,
+   "last_fetch": "2026-11-20T10:38:33+00:00",
+   "last_error": null,
+   "articles": 15
+  },
+  {
+   "slug": "nauka-rosatom",
+   "name": "Rosatom Science (CAIR)",
+   "url": "https://naukarosatom.ru/news/",
+   "homepage": "https://naukarosatom.ru",
+   "kind": "html",
+   "lang": "ru",
+   "builtin": 1,
+   "enabled": 1,
+   "last_fetch": "2026-11-20T10:38:33+00:00",
+   "last_error": null,
+   "articles": 9
+  },
+  {
+   "slug": "wna",
+   "name": "World Nuclear Association",
+   "url": "https://world-nuclear.org/news-and-media",
+   "homepage": "https://world-nuclear.org",
+   "kind": "html",
+   "lang": "en",
+   "builtin": 1,
+   "enabled": 1,
+   "last_fetch": "2026-11-20T10:38:34+00:00",
+   "last_error": null,
+   "articles": 12
+  },
+  {
+   "slug": "wnn",
+   "name": "World Nuclear News",
+   "url": "https://www.world-nuclear-news.org/rss",
+   "homepage": "https://www.world-nuclear-news.org",
+   "kind": "rss",
+   "lang": "en",
+   "builtin": 1,
+   "enabled": 1,
+   "last_fetch": "2026-11-20T10:38:35+00:00",
+   "last_error": null,
+   "articles": 52
+  }
+ ]
+}
