@@ -1,8 +1,8 @@
 {
- "generated_at": "2026-11-20T13:17:21+00:00",
+ "generated_at": "2026-11-20T14:58:36+00:00",
  "ai": false,
  "model": "extractive",
- "articles": 103,
+ "articles": 109,
  "categories": [
   {
    "slug": "smr",
@@ -23,6 +23,11 @@
    "slug": "policy",
    "name": "Policy",
    "full": "Regulation and strategy"
+  },
+  {
+   "slug": "supply",
+   "name": "Supply chain",
+   "full": "Supply chain, contracts and procurement"
   }
  ],
  "sources": [
@@ -35,9 +40,9 @@
    "lang": "ru",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-20T13:17:21+00:00",
-   "last_error": "Server disconnected without sending a response.",
-   "articles": 10
+   "last_fetch": "2026-11-20T14:58:34+00:00",
+   "last_error": null,
+   "articles": 15
   },
   {
    "slug": "ec-smr",
@@ -48,7 +53,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-20T13:17:21+00:00",
+   "last_fetch": "2026-11-20T14:58:33+00:00",
    "last_error": null,
    "articles": 5
   },
@@ -61,7 +66,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-20T13:17:21+00:00",
+   "last_fetch": "2026-11-20T14:58:33+00:00",
    "last_error": null,
    "articles": 15
   },
@@ -74,9 +79,9 @@
    "lang": "ru",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-20T13:17:21+00:00",
+   "last_fetch": "2026-11-20T14:58:33+00:00",
    "last_error": null,
-   "articles": 9
+   "articles": 10
   },
   {
    "slug": "wna",
@@ -87,7 +92,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-20T13:17:21+00:00",
+   "last_fetch": "2026-11-20T14:58:33+00:00",
    "last_error": null,
    "articles": 12
   },
@@ -100,7 +105,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-20T13:17:21+00:00",
+   "last_fetch": "2026-11-20T14:58:34+00:00",
    "last_error": null,
    "articles": 53
   }
