@@ -15,7 +15,7 @@ from fastapi import FastAPI, File, HTTPException, Query, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, HttpUrl
 
-from . import ai, catalog, db, ingest, tagger
+from . import ai, catalog, db, ingest, tagger, tenders
 from .documents import pdf_bytes_to_text, pdf_title
 from .sources import BUILTIN_SOURCES, HTTP, discover
 
@@ -361,3 +361,16 @@ def delete_alert(token: str, keyword: str):
     with db.session() as c:
         c.execute("DELETE FROM alerts WHERE token=? AND keyword=?", (token, keyword))
     return list_alerts(token)
+
+
+# ---------- supply chain: tenders ----------
+
+_tenders_cache: dict = {"at": 0.0, "data": None}
+
+
+@app.get("/api/tenders")
+async def list_tenders():
+    import time
+    if not _tenders_cache["data"] or time.time() - _tenders_cache["at"] > 3600:
+        _tenders_cache.update(at=time.time(), data=await tenders.fetch_all())
+    return _tenders_cache["data"]

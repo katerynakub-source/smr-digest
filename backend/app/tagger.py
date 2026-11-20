@@ -6,6 +6,7 @@ CATEGORIES = [
     {"slug": "tech", "name": "Technology", "full": "New technologies"},
     {"slug": "startups", "name": "Companies", "full": "New companies and startups"},
     {"slug": "policy", "name": "Policy", "full": "Regulation and strategy"},
+    {"slug": "supply", "name": "Supply chain", "full": "Supply chain, contracts and procurement"},
 ]
 
 RULES: dict[str, list[str]] = {
@@ -45,6 +46,16 @@ RULES: dict[str, list[str]] = {
         r"дорожн[а-я]+ карт", r"executive order", r"указ", r"safety review", r"approval", r"одобр",
     ],
 }
+
+RULES["supply"] = [
+    r"supply chain", r"цепочк[а-я]* поставок", r"supplier", r"поставщик", r"contract (award|signed|for|with)",
+    r"awarded (a |the )?contract", r"заключил[аи]? (контракт|договор)", r"контракт на", r"tender", r"тендер",
+    r"procurement", r"закупк", r"\border(s|ed)? for\b", r"manufactur", r"fabricat", r"factory", r"forging",
+    r"поковк", r"components?\b", r"комплектующ", r"equipment (deliver|supply)", r"поставк[аиу]",
+    r"steam generator", r"парогенератор", r"reactor (pressure )?vessel", r"корпус реактора",
+    r"fuel (supply|fabrication|assembl)", r"turbine (deliver|supply)", r"subcontract", r"framework agreement",
+    r"изготов",
+]
 
 _COMPILED = {k: [re.compile(p, re.I) for p in v] for k, v in RULES.items()}
 

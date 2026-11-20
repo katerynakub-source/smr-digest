@@ -38,6 +38,7 @@ export const CATEGORY_LABELS: Record<string, string> = {
   tech: 'Technology',
   startups: 'Companies',
   policy: 'Policy',
+  supply: 'Supply chain',
 };
 
 export const STAGE_LABELS: Record<string, string> = {

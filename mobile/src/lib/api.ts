@@ -37,6 +37,14 @@ export type Company = {
   description: string; reactors: number | Reactor[]; news?: Article[];
 };
 
+export type Tender = {
+  id: string; source: string; region: string; title: string; subject: string | null; buyer: string;
+  country: string; published: string | null; deadline: string | null;
+  kind: 'Tender' | 'Awarded' | 'Prior information' | 'Early engagement'; category: string; value: number | null; url: string;
+};
+
+export type TenderList = { generated_at: string; tenders: Tender[]; errors: Record<string, string> };
+
 export type Answer = { answer: string; passages: { n: number; text: string }[]; ai_model: string };
 
 const KEY_BASE = 'apiBase';
@@ -100,6 +108,7 @@ const serverApi = {
     req<string[]>('/alerts', { method: 'POST', body: JSON.stringify({ token, keyword }) }),
   deleteAlert: (token: string, keyword: string) => req<string[]>(`/alerts?${qs({ token, keyword })}`, { method: 'DELETE' }),
   reportFromUrl: (url: string) => req<{ id: number }>('/reports/url', { method: 'POST', body: JSON.stringify({ url }) }),
+  tenders: () => req<TenderList>('/tenders'),
   uploadReport: (form: FormData) => req<{ id: number }>('/reports/upload', { method: 'POST', body: form }),
 };
 

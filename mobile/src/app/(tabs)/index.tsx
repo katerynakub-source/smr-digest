@@ -11,6 +11,7 @@ const CATS = [
   { key: 'tech', label: 'Technology' },
   { key: 'startups', label: 'Companies' },
   { key: 'policy', label: 'Policy' },
+  { key: 'supply', label: 'Supply chain' },
 ];
 
 export default function Feed() {

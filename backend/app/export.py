@@ -7,7 +7,8 @@ Run on a schedule (GitHub Actions) — no always-on server needed:
 1. Loads the previous articles.json (if any) so history survives between runs.
 2. Fetches all sources, tags, dedupes, pulls full text and builds digests
    (AI if OPENAI_API_KEY is set, otherwise extractive "key facts").
-3. Writes articles.json, catalog.json and meta.json into --out.
+3. Collects nuclear tenders (EU TED, UK Contracts Finder).
+4. Writes articles.json, catalog.json, tenders.json and meta.json into --out.
 """
 from __future__ import annotations
 
@@ -24,7 +25,7 @@ from pathlib import Path
 _tmp = Path(tempfile.mkdtemp()) / "export.db"
 os.environ["SMR_DB"] = str(_tmp)
 
-from . import ai, catalog, db, ingest, tagger  # noqa: E402
+from . import ai, catalog, db, ingest, tagger, tenders  # noqa: E402
 from .main import CARD_COLS, _card, _related_news  # noqa: E402
 from .sources import BUILTIN_SOURCES, discover  # noqa: E402
 
@@ -77,7 +78,9 @@ def import_previous(path: Path) -> int:
                 "fetched_at,tags,title_en,bullets,ai_model,cluster_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                 (a["id"], sid, a.get("kind", "news"), a["url"], a["title"], a.get("excerpt"), a.get("content"),
                  a.get("image"), a["lang"], a["published_at"], a.get("fetched_at") or a["published_at"],
-                 json.dumps(a.get("tags", [])), a.get("title_en"),
+                 json.dumps(sorted((set(a.get("tags", [])) - {"supply"}) | set(tagger.classify(  # re-tag history; supply recomputed
+                     a["title"], a.get("title_en") or "", a.get("excerpt") or "", " ".join(a.get("bullets") or []))))),
+                 a.get("title_en"),
                  json.dumps(a["bullets"], ensure_ascii=False) if a.get("bullets") else None,
                  a.get("ai_model"), a.get("cluster_id")))
             n += 1
@@ -156,8 +159,11 @@ async def main() -> None:
     result = await ingest.refresh_all()
     prune()
     meta = export(args.out)
+    t = await tenders.fetch_all()
+    if t["tenders"] or not (args.out / "tenders.json").exists():  # keep last good list if both registries failed
+        (args.out / "tenders.json").write_text(json.dumps(t, ensure_ascii=False))
     print(f"previous={kept} new={result.get('new')} digested={result.get('digested')} "
-          f"published={meta['articles']} ai={meta['model']}")
+          f"published={meta['articles']} ai={meta['model']} tenders={len(t['tenders'])} errors={t['errors']}")
 
 
 if __name__ == "__main__":

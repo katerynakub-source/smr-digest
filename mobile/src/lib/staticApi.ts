@@ -4,7 +4,7 @@
  * Enabled when EXPO_PUBLIC_DATA_URL is set at build time.
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import type { Answer, Article, Company, Reactor, Source } from './api';
+import type { Answer, Article, Company, Reactor, Source, TenderList } from './api';
 
 export const DATA_URL = (process.env.EXPO_PUBLIC_DATA_URL || '').replace(/\/+$/, '');
 
@@ -151,5 +151,6 @@ export const staticApi = {
   addAlert: (_t: string, _k: string): Promise<string[]> => notAvailable('Keyword alerts'),
   deleteAlert: async (_t: string, _k: string) => [] as string[],
   reportFromUrl: (_url: string): Promise<{ id: number }> => notAvailable('Importing PDF reports'),
+  tenders: () => getJson<TenderList>('tenders.json'),
   uploadReport: (_f: FormData): Promise<{ id: number }> => notAvailable('Importing PDF reports'),
 };
