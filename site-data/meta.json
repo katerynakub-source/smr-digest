@@ -1,8 +1,8 @@
 {
- "generated_at": "2026-11-20T10:38:35+00:00",
+ "generated_at": "2026-11-20T13:17:21+00:00",
  "ai": false,
  "model": "extractive",
- "articles": 102,
+ "articles": 103,
  "categories": [
   {
    "slug": "smr",
@@ -35,8 +35,8 @@
    "lang": "ru",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-20T10:38:33+00:00",
-   "last_error": null,
+   "last_fetch": "2026-11-20T13:17:21+00:00",
+   "last_error": "Server disconnected without sending a response.",
    "articles": 10
   },
   {
@@ -48,7 +48,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-20T10:38:33+00:00",
+   "last_fetch": "2026-11-20T13:17:21+00:00",
    "last_error": null,
    "articles": 5
   },
@@ -61,7 +61,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-20T10:38:33+00:00",
+   "last_fetch": "2026-11-20T13:17:21+00:00",
    "last_error": null,
    "articles": 15
   },
@@ -74,7 +74,7 @@
    "lang": "ru",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-20T10:38:33+00:00",
+   "last_fetch": "2026-11-20T13:17:21+00:00",
    "last_error": null,
    "articles": 9
   },
@@ -87,7 +87,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-20T10:38:34+00:00",
+   "last_fetch": "2026-11-20T13:17:21+00:00",
    "last_error": null,
    "articles": 12
   },
@@ -100,9 +100,9 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-20T10:38:35+00:00",
+   "last_fetch": "2026-11-20T13:17:21+00:00",
    "last_error": null,
-   "articles": 52
+   "articles": 53
   }
  ]
 }
