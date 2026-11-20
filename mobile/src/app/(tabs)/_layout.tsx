@@ -21,7 +21,7 @@ export default function TabLayout() {
         sceneStyle: { backgroundColor: t.bg },
       }}>
       <Tabs.Screen name="index" options={{
-        title: 'Feed', headerTitle: 'SMR Digest', tabBarIcon: icon('newspaper-outline'),
+        title: 'Feed', headerTitle: 'Nuclear Digest', tabBarIcon: icon('newspaper-outline'),
         headerRight: () => (
           <Pressable hitSlop={12} onPress={() => router.push('/settings')} style={{ marginRight: 16 }} accessibilityLabel="Settings">
             <Ionicons name="options-outline" size={22} color={t.text} />

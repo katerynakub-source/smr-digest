@@ -4,7 +4,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Facts, StageBadge } from '@/components/catalog';
 import { ArticleCard, Empty, Loading, SectionTitle } from '@/components/ui';
 import { api, type Reactor } from '@/lib/api';
-import { fonts, useTheme } from '@/lib/theme';
+import { fonts, SIZE_LABELS, useTheme } from '@/lib/theme';
 
 export default function ReactorScreen() {
   const t = useTheme();
@@ -27,6 +27,7 @@ export default function ReactorScreen() {
       </View>
       <SectionTitle>Specifications</SectionTitle>
       <Facts rows={[
+        ['Class', SIZE_LABELS[r.size] ?? r.size],
         ['Type', r.reactor_type],
         ['Coolant', r.coolant],
         ['Electric power', r.power_mwe ? `${r.power_mwe} MWe` : null],

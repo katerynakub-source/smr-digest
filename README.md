@@ -1,4 +1,4 @@
-# SMR Digest — nuclear news & analytics with a focus on SMRs
+# Nuclear Digest — nuclear energy news, reactor projects and supply chain
 
 A cross-platform app (iOS / Android, plus web for debugging) and its aggregation backend.
 
@@ -65,7 +65,7 @@ Keywords are set in Settings. On each refresh the server matches new items and s
 - Offline search runs over saved items.
 
 ## Project catalog
-15 companies and 17 reactors: type, coolant, MWe/MWt, stage, licensing, sites. Statuses are based on developer data and ARIS **as of 2025** — verify against aris.iaea.org before public use. Each card's news feed is built by full-text search on the project's keywords (English and Russian).
+18 companies and 25 reactors — 8 large reactors (AP1000, VVER-1200, EPR, EPR2, APR1400, Hualong One, BN-800, IPHWR-700), 15 SMRs and 2 microreactors, filterable by size class: type, coolant, MWe/MWt, stage, licensing, sites. Statuses are based on developer data and ARIS **as of 2025** — verify against aris.iaea.org before public use. Each card's news feed is built by full-text search on the project's keywords (English and Russian).
 
 ## Next steps
 - Embeddings for duplicate detection when headlines are worded very differently (title Jaccard similarity misses some NucNet/WNN pairs).
@@ -85,3 +85,6 @@ Setup once: create a public GitHub repository named `smr-digest`, push this proj
 Custom sources in this mode: add `{"url": "https://…", "name": "…"}` entries to `backend/extra_sources.json`.
 
 Not available in free mode (they need a live server): asking AI about a text, PDF import, keyword push alerts, adding sources from the app. The public site shows headline, excerpt, key facts and a link to the original — not the full article text, to respect the outlets' copyright (`CONTENT_MAX` controls this).
+
+## Supply chain
+The **Supply** tab lists open and recently awarded nuclear-sector tenders from EU **TED** and UK **Contracts Finder** (`backend/app/tenders.py`, filtered by nuclear CPV codes, known nuclear buyers and keywords; hospital radiopharmaceutical tenders are excluded), a link to **IAEA** tenders on UNGM (not collectable automatically), and news tagged *Supply chain*.

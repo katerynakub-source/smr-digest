@@ -88,7 +88,8 @@ CREATE TABLE IF NOT EXISTS reactors (
     licensing     TEXT,        -- licensing status text
     sites         TEXT,
     description   TEXT,
-    keywords      TEXT NOT NULL DEFAULT '[]'
+    keywords      TEXT NOT NULL DEFAULT '[]',
+    size          TEXT         -- large | smr | micro
 );
 
 CREATE TABLE IF NOT EXISTS devices (
@@ -133,6 +134,9 @@ def session():
 def init() -> None:
     with session() as c:
         c.executescript(SCHEMA)
+        cols = {r[1] for r in c.execute("PRAGMA table_info(reactors)")}
+        if "size" not in cols:  # databases created before reactor size classes existed
+            c.execute("ALTER TABLE reactors ADD COLUMN size TEXT")
 
 
 def row_to_dict(row: sqlite3.Row | None) -> dict | None:

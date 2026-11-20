@@ -127,8 +127,8 @@ export const staticApi = {
   addSource: (_url: string): Promise<Source & { articles: number }> => notAvailable('Adding sources from the app'),
   toggleSource: (_slug: string, _enabled: boolean) => notAvailable('Turning sources on/off'),
   deleteSource: (_slug: string) => notAvailable('Deleting sources'),
-  reactors: async (p: { stage?: string; q?: string } = {}) =>
-    (await load()).reactors.filter((r) => !p.stage || r.stage === p.stage) as Reactor[],
+  reactors: async (p: { stage?: string; q?: string; size?: string } = {}) =>
+    (await load()).reactors.filter((r) => (!p.stage || r.stage === p.stage) && (!p.size || r.size === p.size)) as Reactor[],
   reactor: async (slug: string) => {
     const d = await load();
     const r = d.reactors.find((x) => x.slug === slug);

@@ -141,7 +141,7 @@ def export(out: Path) -> dict:
     meta = {"generated_at": ingest.now_iso(), "ai": ai.enabled(), "model": ai.MODEL if ai.enabled() else "extractive",
             "articles": len(articles), "categories": tagger.CATEGORIES, "sources": sources}
     (out / "articles.json").write_text(json.dumps({"articles": articles, "duplicates": dups}, ensure_ascii=False))
-    (out / "catalog.json").write_text(json.dumps({"stages": catalog.STAGES, "companies": companies,
+    (out / "catalog.json").write_text(json.dumps({"stages": catalog.STAGES, "sizes": catalog.SIZES, "companies": companies,
                                                   "reactors": reactors}, ensure_ascii=False))
     (out / "meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=1))
     return meta

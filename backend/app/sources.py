@@ -11,7 +11,7 @@ import feedparser
 import httpx
 from bs4 import BeautifulSoup
 
-UA = "Mozilla/5.0 (compatible; SMR-Digest/1.0; +news aggregator)"
+UA = "Mozilla/5.0 (compatible; Nuclear-Digest/1.0; +news aggregator)"
 HTTP = dict(headers={"User-Agent": UA}, timeout=25, follow_redirects=True)
 
 BUILTIN_SOURCES = [

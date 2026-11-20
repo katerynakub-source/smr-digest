@@ -4,22 +4,24 @@ import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { ChipRow, Empty, Loading, plural } from '@/components/ui';
 import { api, type Company, type Reactor } from '@/lib/api';
 import { power, StageBadge } from '@/components/catalog';
-import { fonts, STAGE_LABELS, useTheme } from '@/lib/theme';
+import { fonts, SIZE_LABELS, STAGE_LABELS, useTheme } from '@/lib/theme';
 
+const SIZES = [{ key: '', label: 'All sizes' }, { key: 'large', label: 'Large' }, { key: 'smr', label: 'SMR' }, { key: 'micro', label: 'Micro' }];
 const STAGES = [{ key: '', label: 'All stages' }, ...Object.entries(STAGE_LABELS).map(([key, label]) => ({ key, label }))];
 
 export default function Catalog() {
   const t = useTheme();
   const [tab, setTab] = useState<'reactors' | 'companies'>('reactors');
   const [stage, setStage] = useState('');
+  const [size, setSize] = useState('');
   const [reactors, setReactors] = useState<Reactor[] | null>(null);
   const [companies, setCompanies] = useState<Company[] | null>(null);
   const [error, setError] = useState('');
 
   useEffect(() => {
     setReactors(null);
-    api.reactors({ stage }).then(setReactors).catch((e) => setError(e.message));
-  }, [stage]);
+    api.reactors({ stage, size }).then(setReactors).catch((e) => setError(e.message));
+  }, [stage, size]);
   useEffect(() => { api.companies().then(setCompanies).catch((e) => setError(e.message)); }, []);
 
   return (
@@ -33,13 +35,14 @@ export default function Catalog() {
       </View>
       {error && !reactors ? <Empty title="Cannot reach the server" hint={error} /> : tab === 'reactors' ? (
         <>
-          <View><ChipRow items={STAGES} value={stage} onChange={setStage} /></View>
+          <View><ChipRow items={SIZES} value={size} onChange={setSize} /></View>
+          <View style={{ marginTop: -6 }}><ChipRow items={STAGES} value={stage} onChange={setStage} /></View>
           {!reactors ? <Loading /> : (
             <FlatList
               data={reactors}
               keyExtractor={(r) => r.slug}
               contentContainerStyle={{ paddingBottom: 24 }}
-              ListEmptyComponent={<Empty title="No projects at this stage" />}
+              ListEmptyComponent={<Empty title="No projects match these filters" />}
               renderItem={({ item: r }) => (
                 <Pressable onPress={() => router.push({ pathname: '/reactor/[slug]', params: { slug: r.slug } })}
                   style={[s.row, { borderBottomColor: t.faint }]}>
@@ -47,7 +50,7 @@ export default function Catalog() {
                     <Text style={[s.name, { color: t.text }]}>{r.name}</Text>
                     <Text style={{ color: t.muted, marginTop: 2 }}>{r.company_name} · {r.country}</Text>
                     <Text style={{ color: t.muted, marginTop: 6, fontSize: 13 }}>
-                      {r.reactor_type} · {r.coolant} · <Text style={{ color: t.text, fontWeight: '600' }}>{power(r)}</Text>
+                      {SIZE_LABELS[r.size] ?? r.size} · {r.reactor_type} · {r.coolant} · <Text style={{ color: t.text, fontWeight: '600' }}>{power(r)}</Text>
                     </Text>
                   </View>
                   <StageBadge stage={r.stage} />

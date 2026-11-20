@@ -41,6 +41,12 @@ export const CATEGORY_LABELS: Record<string, string> = {
   supply: 'Supply chain',
 };
 
+export const SIZE_LABELS: Record<string, string> = {
+  large: 'Large',
+  smr: 'SMR',
+  micro: 'Micro',
+};
+
 export const STAGE_LABELS: Record<string, string> = {
   concept: 'Concept',
   design: 'Design',

@@ -1,4 +1,4 @@
-"""Seed data for the project catalog (Crunchbase-style company & reactor cards).
+"""Seed data for the project catalog: large reactors, SMRs and microreactors (Crunchbase-style cards).
 
 Keywords stay bilingual (EN + RU) so the linked news feed also matches Russian sources.
 
@@ -7,6 +7,12 @@ Licensing status changes quickly: treat `licensing` as a starting point and keep
 updated (the linked news feed on each card is the live signal).
 """
 import json
+
+SIZES = {
+    "large": "Large reactor",   # roughly 700 MWe and above
+    "smr": "SMR",               # small modular / small reactors, up to a few hundred MWe
+    "micro": "Microreactor",    # up to ~20 MWe, incl. test reactors
+}
 
 STAGES = {
     "concept": "Concept",
@@ -35,8 +41,8 @@ COMPANIES = [
          keywords=["Holtec", "SMR-300", "Palisades"]),
     dict(slug="westinghouse", name="Westinghouse Electric Company", country="USA", founded=1886, kind="Corporation",
          website="https://www.westinghousenuclear.com",
-         description="Developer of the AP1000; AP300 small reactor and eVinci microreactor.",
-         keywords=["Westinghouse", "AP300", "eVinci"]),
+         description="Developer of the AP1000 large reactor, the AP300 SMR and the eVinci microreactor.",
+         keywords=["Westinghouse", "AP1000", "AP300", "eVinci"]),
     dict(slug="terrapower", name="TerraPower", country="USA", founded=2006, kind="Startup",
          website="https://www.terrapower.com",
          description="Co-founded by Bill Gates. Natrium sodium-cooled fast reactor with molten-salt energy storage.",
@@ -55,12 +61,12 @@ COMPANIES = [
          keywords=["Oklo", "Aurora"]),
     dict(slug="rosatom", name="Rosatom State Corporation", country="Russia", founded=2007, kind="State corporation",
          website="https://rosatom.ru",
-         description="Developer of the RITM-200 and KLT-40S reactors and the Proryv project (BREST-OD-300).",
+         description="Developer of the VVER-1200 and BN-800 large reactors, the RITM-200 and KLT-40S small reactors and the Proryv project (BREST-OD-300).",
          keywords=["Rosatom", "Росатом", "РИТМ-200", "RITM-200", "БРЕСТ", "BREST", "АСММ", "Якутия"]),
     dict(slug="cnnc", name="CNNC", country="China", founded=1988, kind="State corporation",
          website="https://en.cnnc.com.cn",
-         description="China National Nuclear Corporation; ACP100 (Linglong One), the first land-based commercial SMR.",
-         keywords=["CNNC", "ACP100", "Linglong"]),
+         description="China National Nuclear Corporation; Hualong One large reactor and ACP100 (Linglong One), the first land-based commercial SMR.",
+         keywords=["CNNC", "ACP100", "Linglong", "Hualong One"]),
     dict(slug="huaneng", name="China Huaneng / Tsinghua University", country="China", founded=1985, kind="State corporation",
          website="https://www.chng.com.cn",
          description="Operator of the HTR-PM high-temperature gas-cooled demonstration plant at Shidaowan.",
@@ -77,6 +83,15 @@ COMPANIES = [
          website="https://www.lastenergy.com",
          description="PWR-20 micro nuclear plant for industrial users and data centres.",
          keywords=["Last Energy", "PWR-20"]),
+    dict(slug="edf", name="EDF / Framatome", country="France", founded=1946, kind="State corporation",
+         website="https://www.edf.fr", description="French utility and its reactor vendor Framatome; EPR and EPR2 large PWRs and the Nuward SMR.",
+         keywords=["EDF", "Framatome", "EPR", "EPR2", "Flamanville", "Hinkley Point C", "Sizewell C", "Penly"]),
+    dict(slug="khnp", name="KHNP / KEPCO", country="South Korea", founded=2001, kind="State corporation",
+         website="https://www.khnp.co.kr", description="Korea Hydro & Nuclear Power, operator and exporter of the APR1400 (Barakah, UAE).",
+         keywords=["KHNP", "KEPCO", "APR1400", "APR1000", "Barakah", "Dukovany"]),
+    dict(slug="npcil", name="NPCIL", country="India", founded=1987, kind="State corporation",
+         website="https://www.npcil.nic.in", description="Nuclear Power Corporation of India; indigenous 700 MWe pressurised heavy water reactors.",
+         keywords=["NPCIL", "PHWR", "Kakrapar", "Rajasthan Atomic", "Gorakhpur"]),
 ]
 
 REACTORS = [
@@ -161,12 +176,54 @@ REACTORS = [
          licensing="Early-stage projects in the USA (Texas), UK and Poland.",
          sites="Texas (USA), Wales, Poland", description="Factory-assembled modular micro plant.",
          keywords=["PWR-20", "Last Energy"]),
+    dict(slug="ap1000", company="westinghouse", name="AP1000", reactor_type="PWR",
+         coolant="Light water", power_mwe=1117, power_mwt=3400, stage="operation", size="large",
+         licensing="USA: NRC design certification (2011 amendment). In operation at Vogtle 3–4 (USA), Sanmen and Haiyang (China).",
+         sites="Vogtle (USA), Sanmen, Haiyang (China); planned: Poland, Bulgaria (Kozloduy 7–8)",
+         description="Gen III+ two-loop PWR with passive safety systems.", keywords=["AP1000", "Vogtle", "Lubiatowo", "Kozloduy 7"]),
+    dict(slug="vver-1200", company="rosatom", name="VVER-1200 (AES-2006)", reactor_type="PWR",
+         coolant="Light water", power_mwe=1200, power_mwt=3200, stage="operation", size="large",
+         licensing="In operation in Russia and Belarus; units under construction abroad.",
+         sites="Novovoronezh II, Leningrad II (Russia), Ostrovets (Belarus), Rooppur (Bangladesh), Akkuyu (Türkiye), El Dabaa (Egypt), Paks II (Hungary)",
+         description="Gen III+ pressurised water reactor, Rosatom's main export design.", keywords=["VVER-1200", "ВВЭР-1200", "Rooppur", "Руппур", "Akkuyu", "Аккую", "El Dabaa", "Paks II", "Ostrovets"]),
+    dict(slug="bn-800", company="rosatom", name="BN-800", reactor_type="SFR",
+         coolant="Sodium", power_mwe=880, power_mwt=2100, stage="operation", size="large",
+         licensing="Commercial operation since 2016.", sites="Beloyarsk (Russia)",
+         description="Sodium-cooled fast reactor running on MOX fuel; basis for the planned BN-1200M.", keywords=["BN-800", "БН-800", "Белоярск", "Beloyarsk", "BN-1200"]),
+    dict(slug="epr", company="edf", name="EPR", reactor_type="PWR",
+         coolant="Light water", power_mwe=1650, power_mwt=4590, stage="operation", size="large",
+         licensing="In operation at Taishan 1–2 (China), Olkiluoto 3 (Finland) and Flamanville 3 (France); Hinkley Point C under construction.",
+         sites="Taishan (China), Olkiluoto (Finland), Flamanville (France), Hinkley Point C (UK); planned: Sizewell C (UK)",
+         description="Gen III+ four-loop PWR, one of the largest reactors in operation.", keywords=["EPR", "Flamanville", "Olkiluoto", "Taishan", "Hinkley Point C", "Sizewell C"]),
+    dict(slug="epr2", company="edf", name="EPR2", reactor_type="PWR",
+         coolant="Light water", power_mwe=1670, power_mwt=4590, stage="licensing", size="large",
+         licensing="France: licensing for the first pair at Penly; programme of six units.",
+         sites="Penly, Gravelines, Bugey (France)", description="Simplified, more buildable successor of the EPR.", keywords=["EPR2", "Penly", "Gravelines"]),
+    dict(slug="apr1400", company="khnp", name="APR1400", reactor_type="PWR",
+         coolant="Light water", power_mwe=1400, power_mwt=3983, stage="operation", size="large",
+         licensing="Korea: in operation (Shin Kori, Shin Hanul, Saeul). UAE: Barakah 1–4 operating. USA: NRC design certification (2019).",
+         sites="Shin Kori, Shin Hanul, Saeul (South Korea), Barakah (UAE)",
+         description="Gen III+ PWR; the APR1000 variant was selected for Dukovany (Czechia).", keywords=["APR1400", "APR1000", "Barakah", "Shin Hanul", "Saeul", "Dukovany"]),
+    dict(slug="hualong-one", company="cnnc", name="Hualong One (HPR1000)", reactor_type="PWR",
+         coolant="Light water", power_mwe=1170, power_mwt=3050, stage="operation", size="large",
+         licensing="In operation in China and Pakistan; many units under construction (CNNC and CGN versions).",
+         sites="Fuqing, Fangchenggang, Zhangzhou (China), Karachi K-2/K-3 (Pakistan)",
+         description="Chinese Gen III PWR combining CNNC and CGN designs.", keywords=["Hualong One", "HPR1000", "Hualong", "Zhangzhou", "Fangchenggang", "Karachi"]),
+    dict(slug="phwr-700", company="npcil", name="IPHWR-700", reactor_type="PHWR",
+         coolant="Heavy water", power_mwe=700, power_mwt=2166, stage="operation", size="large",
+         licensing="In operation at Kakrapar 3–4 and Rajasthan 7; fleet of units under construction.",
+         sites="Kakrapar, Rajasthan (Rawatbhata), Gorakhpur, Kaiga, Mahi Banswara (India)",
+         description="Indian pressurised heavy water reactor using natural uranium.", keywords=["PHWR", "Kakrapar", "Rajasthan Atomic", "RAPP", "Gorakhpur", "NPCIL"]),
 ]
 
 
+MICRO = {"pwr-20", "hermes"}
+
+
 def seed(conn) -> None:
-    if conn.execute("SELECT COUNT(*) FROM companies").fetchone()[0]:
-        return
+    """(Re)load the catalog: it is static seed data, so replace it on every start."""
+    conn.execute("DELETE FROM reactors")
+    conn.execute("DELETE FROM companies")
     ids = {}
     for c in COMPANIES:
         cur = conn.execute(
@@ -175,8 +232,9 @@ def seed(conn) -> None:
              json.dumps(c["keywords"], ensure_ascii=False)))
         ids[c["slug"]] = cur.lastrowid
     for r in REACTORS:
+        size = r.get("size") or ("micro" if r["slug"] in MICRO else "smr")
         conn.execute(
             "INSERT INTO reactors(slug,company_id,name,reactor_type,coolant,power_mwe,power_mwt,stage,licensing,sites,"
-            "description,keywords) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+            "description,keywords,size) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
             (r["slug"], ids[r["company"]], r["name"], r["reactor_type"], r["coolant"], r["power_mwe"], r["power_mwt"],
-             r["stage"], r["licensing"], r["sites"], r["description"], json.dumps(r["keywords"], ensure_ascii=False)))
+             r["stage"], r["licensing"], r["sites"], r["description"], json.dumps(r["keywords"], ensure_ascii=False), size))

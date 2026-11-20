@@ -10,9 +10,9 @@ const b = base.replace(/\/+$/, '');
 copyFileSync(new URL('../assets/icon.png', import.meta.url), join(dist, 'icon.png'));
 
 writeFileSync(join(dist, 'manifest.json'), JSON.stringify({
-  name: 'SMR Digest',
-  short_name: 'SMR Digest',
-  description: 'Nuclear energy and small modular reactor news',
+  name: 'Nuclear Digest',
+  short_name: 'Nuclear Digest',
+  description: 'Nuclear energy news, reactor projects and tenders',
   start_url: `${b}/`,
   scope: `${b}/`,
   display: 'standalone',
@@ -26,7 +26,7 @@ const tags = `
     <link rel="apple-touch-icon" href="${b}/icon.png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="SMR Digest" />
+    <meta name="apple-mobile-web-app-title" content="Nuclear Digest" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="theme-color" content="#FBFAF7" />
 `;

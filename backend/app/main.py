@@ -1,4 +1,4 @@
-"""SMR Digest API."""
+"""Nuclear Digest API."""
 from __future__ import annotations
 
 import asyncio
@@ -39,7 +39,7 @@ async def lifespan(app: FastAPI):
         task.cancel()
 
 
-app = FastAPI(title="SMR Digest API", version="1.0", lifespan=lifespan)
+app = FastAPI(title="Nuclear Digest API", version="1.0", lifespan=lifespan)
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 CARD_COLS = """a.id, a.kind, a.url, a.title, a.title_en, a.excerpt, a.image, a.lang, a.published_at, a.tags,
@@ -269,13 +269,17 @@ def stages():
 
 
 @app.get("/api/catalog/reactors")
-def reactors(stage: str | None = None, reactor_type: str | None = None, q: str | None = None):
+def reactors(stage: str | None = None, reactor_type: str | None = None, q: str | None = None,
+             size: str | None = None):
     sql = ("SELECT r.*, c.name AS company_name, c.slug AS company_slug, c.country FROM reactors r "
            "JOIN companies c ON c.id=r.company_id WHERE 1=1")
     args = []
     if stage:
         sql += " AND r.stage=?"
         args.append(stage)
+    if size:
+        sql += " AND r.size=?"
+        args.append(size)
     if reactor_type:
         sql += " AND r.reactor_type=?"
         args.append(reactor_type)

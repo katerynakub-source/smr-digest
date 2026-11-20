@@ -28,7 +28,7 @@ export type Source = {
 
 export type Reactor = {
   slug: string; name: string; reactor_type: string; coolant: string; power_mwe: number | null;
-  power_mwt: number | null; stage: string; licensing: string; sites: string; description: string;
+  power_mwt: number | null; stage: string; size: 'large' | 'smr' | 'micro'; licensing: string; sites: string; description: string;
   company_name: string; company_slug: string; country: string; news?: Article[];
 };
 
@@ -99,7 +99,7 @@ const serverApi = {
   toggleSource: (slug: string, enabled: boolean) =>
     req(`/sources/${slug}`, { method: 'PATCH', body: JSON.stringify({ enabled }) }),
   deleteSource: (slug: string) => req(`/sources/${slug}`, { method: 'DELETE' }),
-  reactors: (p: { stage?: string; q?: string } = {}) => req<Reactor[]>(`/catalog/reactors?${qs(p)}`),
+  reactors: (p: { stage?: string; q?: string; size?: string } = {}) => req<Reactor[]>(`/catalog/reactors?${qs(p)}`),
   reactor: (slug: string) => req<Reactor>(`/catalog/reactors/${slug}`),
   companies: () => req<Company[]>('/catalog/companies'),
   company: (slug: string) => req<Company & { reactors: Reactor[] }>(`/catalog/companies/${slug}`),
