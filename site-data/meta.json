@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-21T10:54:26+00:00",
+ "generated_at": "2026-11-21T13:03:35+00:00",
  "ai": false,
  "model": "extractive",
  "articles": 122,
@@ -40,7 +40,7 @@
    "lang": "ru",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-21T10:54:25+00:00",
+   "last_fetch": "2026-11-21T13:03:34+00:00",
    "last_error": null,
    "articles": 24
   },
@@ -53,7 +53,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-21T10:54:24+00:00",
+   "last_fetch": "2026-11-21T13:03:33+00:00",
    "last_error": null,
    "articles": 5
   },
@@ -66,7 +66,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-21T10:54:24+00:00",
+   "last_fetch": "2026-11-21T13:03:33+00:00",
    "last_error": null,
    "articles": 15
   },
@@ -79,7 +79,7 @@
    "lang": "ru",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-21T10:54:25+00:00",
+   "last_fetch": "2026-11-21T13:03:34+00:00",
    "last_error": null,
    "articles": 10
   },
@@ -92,7 +92,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-21T10:54:24+00:00",
+   "last_fetch": "2026-11-21T13:03:33+00:00",
    "last_error": null,
    "articles": 12
   },
@@ -105,7 +105,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-21T10:54:25+00:00",
+   "last_fetch": "2026-11-21T13:03:34+00:00",
    "last_error": null,
    "articles": 57
   }
