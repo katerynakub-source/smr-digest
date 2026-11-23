@@ -1,8 +1,9 @@
 {
- "generated_at": "2026-11-23T14:35:06+00:00",
+ "generated_at": "2026-11-23T17:34:29+00:00",
  "ai": false,
  "model": "extractive",
- "articles": 136,
+ "translator": "argos ru-en (offline)",
+ "articles": 107,
  "categories": [
   {
    "slug": "smr",
@@ -40,7 +41,7 @@
    "lang": "ru",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-23T14:35:01+00:00",
+   "last_fetch": "2026-11-23T17:34:14+00:00",
    "last_error": null,
    "articles": 35
   },
@@ -53,7 +54,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-23T14:35:00+00:00",
+   "last_fetch": "2026-11-23T17:34:12+00:00",
    "last_error": null,
    "articles": 5
   },
@@ -66,7 +67,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-23T14:35:00+00:00",
+   "last_fetch": "2026-11-23T17:34:12+00:00",
    "last_error": null,
    "articles": 16
   },
@@ -79,7 +80,7 @@
    "lang": "ru",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-23T14:35:00+00:00",
+   "last_fetch": "2026-11-23T17:34:12+00:00",
    "last_error": null,
    "articles": 10
   },
@@ -92,7 +93,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-23T14:35:00+00:00",
+   "last_fetch": "2026-11-23T17:34:12+00:00",
    "last_error": null,
    "articles": 12
   },
@@ -105,9 +106,9 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-23T14:35:00+00:00",
+   "last_fetch": "2026-11-23T17:34:12+00:00",
    "last_error": null,
-   "articles": 59
+   "articles": 61
   }
  ]
 }
