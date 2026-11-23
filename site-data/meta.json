@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-22T21:49:33+00:00",
+ "generated_at": "2026-11-23T02:43:32+00:00",
  "ai": false,
  "model": "extractive",
  "articles": 123,
@@ -40,7 +40,7 @@
    "lang": "ru",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-22T21:49:32+00:00",
+   "last_fetch": "2026-11-23T02:43:31+00:00",
    "last_error": null,
    "articles": 25
   },
@@ -53,7 +53,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-22T21:49:31+00:00",
+   "last_fetch": "2026-11-23T02:43:30+00:00",
    "last_error": null,
    "articles": 5
   },
@@ -66,7 +66,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-22T21:49:31+00:00",
+   "last_fetch": "2026-11-23T02:43:30+00:00",
    "last_error": null,
    "articles": 15
   },
@@ -79,7 +79,7 @@
    "lang": "ru",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-22T21:49:32+00:00",
+   "last_fetch": "2026-11-23T02:43:30+00:00",
    "last_error": null,
    "articles": 10
   },
@@ -92,7 +92,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-22T21:49:32+00:00",
+   "last_fetch": "2026-11-23T02:43:30+00:00",
    "last_error": null,
    "articles": 12
   },
@@ -105,7 +105,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-22T21:49:32+00:00",
+   "last_fetch": "2026-11-23T02:43:31+00:00",
    "last_error": null,
    "articles": 57
   }
