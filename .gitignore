@@ -7,3 +7,4 @@ mobile/dist/
 mobile/.expo/
 .DS_Store
 .claude/
+backend/models/

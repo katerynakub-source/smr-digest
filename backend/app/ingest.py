@@ -144,8 +144,11 @@ async def refresh_all() -> dict:
                     log.warning("digest %s failed: %s", i, e)
 
         await asyncio.gather(*(run(i) for i in todo))
+        from . import annotate
+        with db.session() as c:
+            ann = annotate.annotate_all(c)
         pushed = await send_alerts(new_ids)
-        return {"status": "ok", "new": len(new_ids), "digested": len(todo), "alerts": pushed}
+        return {"translated": ann["translated"], "status": "ok", "new": len(new_ids), "digested": len(todo), "alerts": pushed}
 
 
 async def scheduler(interval_min: int) -> None:

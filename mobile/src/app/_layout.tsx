@@ -37,6 +37,10 @@ export default function RootLayout() {
         <Stack.Screen name="company/[slug]" options={{ title: 'Company' }} />
         <Stack.Screen name="reactor/[slug]" options={{ title: 'Reactor' }} />
         <Stack.Screen name="sources" options={{ title: 'Sources' }} />
+        <Stack.Screen name="search" options={{ title: 'Search' }} />
+        <Stack.Screen name="saved" options={{ title: 'Saved' }} />
+        <Stack.Screen name="projects" options={{ title: 'Project database' }} />
+        <Stack.Screen name="settings" options={{ title: 'Settings' }} />
       </Stack>
     </>
   );

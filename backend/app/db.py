@@ -39,7 +39,11 @@ CREATE TABLE IF NOT EXISTS articles (
     title_en     TEXT,
     bullets   TEXT,                            -- JSON list of strings
     ai_model     TEXT,
-    cluster_id   INTEGER                          -- id of canonical article for duplicates
+    cluster_id   INTEGER,                         -- id of canonical article for duplicates
+    sections     TEXT NOT NULL DEFAULT '[]',      -- JSON: smr | large | supply
+    relevance    REAL,                            -- Assystem relevance score (see annotate.py)
+    bullets_en   TEXT,                            -- JSON list, English
+    excerpt_en   TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_articles_pub ON articles(published_at DESC);
 CREATE INDEX IF NOT EXISTS idx_articles_cluster ON articles(cluster_id);
@@ -137,13 +141,18 @@ def init() -> None:
         cols = {r[1] for r in c.execute("PRAGMA table_info(reactors)")}
         if "size" not in cols:  # databases created before reactor size classes existed
             c.execute("ALTER TABLE reactors ADD COLUMN size TEXT")
+        acols = {r[1] for r in c.execute("PRAGMA table_info(articles)")}
+        for col, ddl in [("sections", "TEXT NOT NULL DEFAULT '[]'"), ("relevance", "REAL"),
+                         ("bullets_en", "TEXT"), ("excerpt_en", "TEXT")]:
+            if col not in acols:
+                c.execute(f"ALTER TABLE articles ADD COLUMN {col} {ddl}")
 
 
 def row_to_dict(row: sqlite3.Row | None) -> dict | None:
     if row is None:
         return None
     d = dict(row)
-    for key in ("tags", "bullets", "keywords"):
+    for key in ("tags", "bullets", "keywords", "sections", "bullets_en"):
         if key in d and isinstance(d[key], str):
             try:
                 d[key] = json.loads(d[key])

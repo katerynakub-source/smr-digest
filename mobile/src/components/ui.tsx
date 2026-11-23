@@ -1,7 +1,7 @@
 import { router } from 'expo-router';
 import { memo } from 'react';
 import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import type { Article } from '@/lib/api';
+import { view, type Article, type ViewMode } from '@/lib/api';
 import { CATEGORY_LABELS, fonts, formatDate, useTheme } from '@/lib/theme';
 
 export function Chip({ label, active, onPress }: { label: string; active?: boolean; onPress?: () => void }) {
@@ -50,28 +50,32 @@ export function Bullets({ items, size = 15 }: { items: string[]; size?: number }
   );
 }
 
+// SMR / Large / Supply are tabs now; cards only show cross-cutting topics
+const TOPIC_TAGS = new Set(['tech', 'startups', 'policy']);
+
 /** Feed card: source/date, title (RU when available), AI digest inside the card, tags. */
-export const ArticleCard = memo(function ArticleCard({ a, compact }: { a: Article; compact?: boolean }) {
+export const ArticleCard = memo(function ArticleCard({ a, compact, mode = 'en' }: { a: Article; compact?: boolean; mode?: ViewMode }) {
   const t = useTheme();
-  const title = a.title_en || a.title;
-  const bullets = (a.bullets || []).slice(0, compact ? 0 : 3);
+  const v = view(a, mode);
+  const title = v.title;
+  const bullets = v.bullets.slice(0, compact ? 0 : 3);
   return (
     <Pressable
-      onPress={() => router.push({ pathname: '/article/[id]', params: { id: String(a.id) } })}
+      onPress={() => router.push({ pathname: '/article/[id]', params: { id: String(a.id), mode } })}
       style={({ pressed }) => [s.card, { backgroundColor: t.card, borderColor: t.faint, opacity: pressed ? 0.85 : 1 }]}>
       <Meta a={a} />
       <View style={{ flexDirection: 'row', gap: 12 }}>
         <Text style={[s.title, { color: t.text }]} numberOfLines={compact ? 3 : 4}>{title}</Text>
         {a.image && compact ? <Image source={{ uri: a.image }} style={s.thumb} /> : null}
       </View>
-      {a.title_en && a.lang !== 'en' ? (
-        <Text style={[s.orig, { color: t.muted }]} numberOfLines={1}>{a.title}</Text>
+      {v.translated ? (
+        <Text style={[s.orig, { color: t.muted }]} numberOfLines={1}>Translated from Russian</Text>
       ) : null}
       {a.snippet ? <Text style={[s.snippet, { color: t.muted }]} numberOfLines={2}>{a.snippet}</Text> : null}
       {bullets.length ? <View style={{ marginTop: 10 }}><Bullets items={bullets} size={14} /></View> : null}
-      {a.tags.length ? (
+      {a.tags.some((tg) => TOPIC_TAGS.has(tg)) || a.kind === 'report' ? (
         <View style={s.tags}>
-          {a.tags.map((tag) => (
+          {a.tags.filter((tg) => TOPIC_TAGS.has(tg)).map((tag) => (
             <Text key={tag} style={[s.tag, { color: t.accent, backgroundColor: t.accentSoft }]}>
               {CATEGORY_LABELS[tag] ?? tag}
             </Text>

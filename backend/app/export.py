@@ -25,7 +25,7 @@ from pathlib import Path
 _tmp = Path(tempfile.mkdtemp()) / "export.db"
 os.environ["SMR_DB"] = str(_tmp)
 
-from . import ai, catalog, db, ingest, tagger, tenders  # noqa: E402
+from . import ai, annotate, catalog, db, ingest, tagger, tenders, translate  # noqa: E402
 from .main import CARD_COLS, _card, _related_news  # noqa: E402
 from .sources import BUILTIN_SOURCES, discover  # noqa: E402
 
@@ -75,14 +75,16 @@ def import_previous(path: Path) -> int:
                 continue
             c.execute(
                 "INSERT OR IGNORE INTO articles(id,source_id,kind,url,title,excerpt,content,image,lang,published_at,"
-                "fetched_at,tags,title_en,bullets,ai_model,cluster_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                "fetched_at,tags,title_en,bullets,ai_model,cluster_id,bullets_en,excerpt_en) "
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                 (a["id"], sid, a.get("kind", "news"), a["url"], a["title"], a.get("excerpt"), a.get("content"),
                  a.get("image"), a["lang"], a["published_at"], a.get("fetched_at") or a["published_at"],
                  json.dumps(sorted((set(a.get("tags", [])) - {"supply"}) | set(tagger.classify(  # re-tag history; supply recomputed
                      a["title"], a.get("title_en") or "", a.get("excerpt") or "", " ".join(a.get("bullets") or []))))),
                  a.get("title_en"),
                  json.dumps(a["bullets"], ensure_ascii=False) if a.get("bullets") else None,
-                 a.get("ai_model"), a.get("cluster_id")))
+                 a.get("ai_model"), a.get("cluster_id"),
+                 json.dumps(a["bullets_en"], ensure_ascii=False) if a.get("bullets_en") else None, a.get("excerpt_en")))
             n += 1
         # duplicates arrive inside also_in; keep their source links working
         for a in data.get("duplicates", []):
@@ -109,7 +111,8 @@ def export(out: Path) -> dict:
     out.mkdir(parents=True, exist_ok=True)
     with db.session() as c:
         rows = c.execute(f"SELECT {CARD_COLS}, a.content, a.fetched_at FROM articles a JOIN sources s "
-                         "ON s.id=a.source_id WHERE a.cluster_id IS NULL ORDER BY a.published_at DESC").fetchall()
+                         "ON s.id=a.source_id WHERE a.cluster_id IS NULL AND COALESCE(a.relevance, 0) >= ? "
+                         "ORDER BY a.published_at DESC", (annotate.MIN_SCORE,)).fetchall()
         articles = []
         for r in rows:
             card = _card(r, c)
@@ -139,6 +142,7 @@ def export(out: Path) -> dict:
             reactors.append(r)
 
     meta = {"generated_at": ingest.now_iso(), "ai": ai.enabled(), "model": ai.MODEL if ai.enabled() else "extractive",
+            "translator": "argos ru-en (offline)" if translate.enabled() else None,
             "articles": len(articles), "categories": tagger.CATEGORIES, "sources": sources}
     (out / "articles.json").write_text(json.dumps({"articles": articles, "duplicates": dups}, ensure_ascii=False))
     (out / "catalog.json").write_text(json.dumps({"stages": catalog.STAGES, "sizes": catalog.SIZES, "companies": companies,

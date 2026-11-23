@@ -15,7 +15,7 @@ from fastapi import FastAPI, File, HTTPException, Query, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, HttpUrl
 
-from . import ai, catalog, db, ingest, tagger, tenders
+from . import ai, annotate, catalog, db, ingest, tagger, tenders
 from .documents import pdf_bytes_to_text, pdf_title
 from .sources import BUILTIN_SOURCES, HTTP, discover
 
@@ -43,7 +43,7 @@ app = FastAPI(title="Nuclear Digest API", version="1.0", lifespan=lifespan)
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 CARD_COLS = """a.id, a.kind, a.url, a.title, a.title_en, a.excerpt, a.image, a.lang, a.published_at, a.tags,
-               a.bullets, a.ai_model, a.cluster_id, s.slug AS source_slug, s.name AS source_name"""
+               a.bullets, a.ai_model, a.cluster_id, a.sections, a.relevance, a.bullets_en, a.excerpt_en, s.slug AS source_slug, s.name AS source_name"""
 
 
 def _card(row, conn) -> dict:
@@ -81,8 +81,18 @@ def categories():
 
 @app.get("/api/articles")
 def articles(category: str | None = None, source: str | None = None, kind: str = "news",
-             limit: int = Query(30, le=100), before: str | None = None, include_duplicates: bool = False):
+             limit: int = Query(30, le=100), before: str | None = None, include_duplicates: bool = False,
+             section: str | None = None, lang: str | None = None):
     where, args = ["a.kind = ?"], [kind]
+    if kind == "news":
+        where.append(f"COALESCE(a.relevance, 0) >= {annotate.MIN_SCORE}")
+    if section:
+        where.append("EXISTS (SELECT 1 FROM json_each(a.sections) WHERE value = ?)")
+        args.append(section)
+        where.append("(a.lang = 'en' OR a.bullets_en IS NOT NULL)")  # English tabs need English text
+    if lang:
+        where.append("a.lang = ?")
+        args.append(lang)
     if not include_duplicates:
         where.append("a.cluster_id IS NULL")
     if category:

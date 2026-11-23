@@ -15,6 +15,10 @@ export type Article = {
   published_at: string;
   tags: string[];
   bullets: string[] | null;
+  bullets_en?: string[] | null;
+  excerpt_en?: string | null;
+  sections?: string[];
+  relevance?: number | null;
   ai_model: string | null;
   source: { slug: string; name: string };
   also_in: { id: number; url: string; source: string }[];
@@ -44,6 +48,19 @@ export type Tender = {
 };
 
 export type TenderList = { generated_at: string; tenders: Tender[]; errors: Record<string, string> };
+
+/** 'en' = English tabs (Russian items shown in translation); 'orig' = original language (Russian tab). */
+export type ViewMode = 'en' | 'orig';
+
+export function view(a: Article, mode: ViewMode = 'en') {
+  const translated = mode === 'en' && a.lang !== 'en' && !!a.title_en;
+  return {
+    title: translated ? a.title_en! : a.title,
+    bullets: (translated ? a.bullets_en : a.bullets) || [],
+    excerpt: translated ? a.excerpt_en || '' : a.excerpt || '',
+    translated,
+  };
+}
 
 export type Answer = { answer: string; passages: { n: number; text: string }[]; ai_model: string };
 
@@ -87,7 +104,7 @@ const qs = (p: Record<string, string | number | undefined | null>) =>
 
 const serverApi = {
   health: () => req<{ ok: boolean; ai: boolean; model: string; generated_at?: string }>('/health'),
-  articles: (p: { category?: string; source?: string; kind?: string; before?: string; limit?: number }) =>
+  articles: (p: { category?: string; source?: string; kind?: string; before?: string; limit?: number; section?: string; lang?: string }) =>
     req<Article[]>(`/articles?${qs(p)}`),
   article: (id: number) => req<Article>(`/articles/${id}`),
   digest: (id: number, force = false) => req<Article>(`/articles/${id}/digest?force=${force}`, { method: 'POST' }),

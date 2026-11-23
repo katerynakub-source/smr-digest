@@ -74,7 +74,7 @@ function searchArticles(d: Data, q: string): Article[] {
   const scored: [number, Article][] = [];
   for (const a of d.articles) {
     const title = norm(`${a.title} ${a.title_en || ''}`);
-    const body = norm(`${a.excerpt || ''} ${(a.bullets || []).join(' ')} ${a.content || ''}`);
+    const body = norm(`${a.excerpt || ''} ${a.excerpt_en || ''} ${(a.bullets || []).join(' ')} ${(a.bullets_en || []).join(' ')} ${a.content || ''}`);
     let score = 0;
     for (const t of terms) {
       const inTitle = title.includes(t), inBody = body.includes(t);
@@ -99,11 +99,13 @@ export const staticApi = {
     const d = await load();
     return { ok: true, ai: d.meta.ai, model: d.meta.model, generated_at: d.meta.generated_at };
   },
-  articles: async (p: { category?: string; source?: string; kind?: string; before?: string; limit?: number }) => {
+  articles: async (p: { category?: string; source?: string; kind?: string; before?: string; limit?: number; section?: string; lang?: string }) => {
     const d = await load();
     return d.articles
       .filter((a) => (p.kind || 'news') === a.kind)
       .filter((a) => !p.category || a.tags.includes(p.category))
+      .filter((a) => !p.section || ((a.sections || []).includes(p.section) && (a.lang === 'en' || !!a.title_en)))
+      .filter((a) => !p.lang || a.lang === p.lang)
       .filter((a) => !p.source || a.source.slug === p.source)
       .filter((a) => !p.before || a.published_at < p.before)
       .slice(0, p.limit || 30)

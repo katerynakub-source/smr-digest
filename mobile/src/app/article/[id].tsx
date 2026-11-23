@@ -3,13 +3,15 @@ import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Image, Linking, Pressable, ScrollView, Share, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Btn, Bullets, Empty, Loading, Meta } from '@/components/ui';
-import { api, STATIC, type Answer, type Article } from '@/lib/api';
+import { api, STATIC, view, type Answer, type Article, type ViewMode } from '@/lib/api';
 import { getSaved, removeArticle, saveArticle, useIsSaved } from '@/lib/offline';
 import { CATEGORY_LABELS, fonts, useTheme } from '@/lib/theme';
 
 export default function ArticleScreen() {
   const t = useTheme();
-  const id = Number(useLocalSearchParams<{ id: string }>().id);
+  const params = useLocalSearchParams<{ id: string; mode?: string }>();
+  const id = Number(params.id);
+  const mode: ViewMode = params.mode === 'orig' ? 'orig' : 'en';
   const [a, setA] = useState<Article | null>(null);
   const [error, setError] = useState('');
   const [offline, setOffline] = useState(false);
@@ -43,7 +45,9 @@ export default function ArticleScreen() {
   if (!a) return <Loading />;
 
   const isReport = a.kind === 'report';
-  const paragraphs = (a.content || a.excerpt || '').split(/\n{2,}/).filter(Boolean);
+  const v = view(a, mode);
+  // full text exists only in the server version; in English mode a Russian item shows its translated excerpt
+  const paragraphs = ((v.translated ? '' : a.content) || v.excerpt || '').split(/\n{2,}/).filter(Boolean);
   const visible = isReport && !showFull ? paragraphs.slice(0, 12) : paragraphs;
 
   return (
@@ -52,7 +56,7 @@ export default function ArticleScreen() {
         title: isReport ? 'Report' : a.source.name,
         headerRight: () => (
           <View style={{ flexDirection: 'row', gap: 18 }}>
-            <Pressable hitSlop={10} onPress={() => Share.share({ message: `${a.title_en || a.title}\n${a.url}` })}>
+            <Pressable hitSlop={10} onPress={() => Share.share({ message: `${v.title}\n${a.url}` })}>
               <Ionicons name="share-outline" size={22} color={t.text} />
             </Pressable>
             <Pressable hitSlop={10} onPress={() => (saved ? removeArticle(a.id) : saveArticle(a))}>
@@ -64,8 +68,8 @@ export default function ArticleScreen() {
       <ScrollView contentContainerStyle={s.wrap} keyboardShouldPersistTaps="handled">
         {offline ? <Text style={[s.small, { color: t.muted, marginBottom: 8 }]}>Offline copy</Text> : null}
         <Meta a={a} />
-        <Text style={[s.h1, { color: t.text }]}>{a.title_en || a.title}</Text>
-        {a.title_en && a.lang !== 'en' ? <Text style={[s.small, { color: t.muted, fontStyle: 'italic' }]}>{a.title}</Text> : null}
+        <Text style={[s.h1, { color: t.text }]}>{v.title}</Text>
+        {v.translated ? <Text style={[s.small, { color: t.muted, fontStyle: 'italic' }]}>Translated automatically from Russian · original: {a.title}</Text> : null}
         <View style={s.tags}>
           {a.tags.map((tag) => <Text key={tag} style={[s.tag, { color: t.accent, backgroundColor: t.accentSoft }]}>{CATEGORY_LABELS[tag] ?? tag}</Text>)}
         </View>
@@ -74,11 +78,11 @@ export default function ArticleScreen() {
           <Text style={[s.label, { color: t.muted }]}>
             {a.ai_model === 'extractive' ? 'Key facts' : 'AI digest'}
           </Text>
-          {a.bullets?.length ? <Bullets items={a.bullets} size={15} /> :
+          {v.bullets.length ? <Bullets items={v.bullets} size={15} /> :
             digesting ? <ActivityIndicator color={t.muted} /> :
               <Text style={{ color: t.muted }}>Not enough text for a digest.</Text>}
-          {a.ai_model === 'extractive' && a.lang !== 'en' ? (
-            <Text style={[s.small, { color: t.muted, marginTop: 8 }]}>Translation and AI digest appear once an AI key is configured.</Text>
+          {v.translated ? (
+            <Text style={[s.small, { color: t.muted, marginTop: 8 }]}>Machine-translated with a free offline translator — check the original for exact wording.</Text>
           ) : null}
         </View>
 
