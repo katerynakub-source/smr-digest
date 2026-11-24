@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-11-23T17:34:29+00:00",
+ "generated_at": "2026-11-24T02:54:08+00:00",
  "ai": false,
  "model": "extractive",
  "translator": "argos ru-en (offline)",
- "articles": 107,
+ "articles": 110,
  "categories": [
   {
    "slug": "smr",
@@ -41,9 +41,9 @@
    "lang": "ru",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-23T17:34:14+00:00",
+   "last_fetch": "2026-11-24T02:53:59+00:00",
    "last_error": null,
-   "articles": 35
+   "articles": 21
   },
   {
    "slug": "ec-smr",
@@ -54,7 +54,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-23T17:34:12+00:00",
+   "last_fetch": "2026-11-24T02:53:58+00:00",
    "last_error": null,
    "articles": 5
   },
@@ -67,7 +67,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-23T17:34:12+00:00",
+   "last_fetch": "2026-11-24T02:53:58+00:00",
    "last_error": null,
    "articles": 16
   },
@@ -80,9 +80,9 @@
    "lang": "ru",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-23T17:34:12+00:00",
+   "last_fetch": "2026-11-24T02:53:59+00:00",
    "last_error": null,
-   "articles": 10
+   "articles": 9
   },
   {
    "slug": "wna",
@@ -93,7 +93,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-23T17:34:12+00:00",
+   "last_fetch": "2026-11-24T02:53:58+00:00",
    "last_error": null,
    "articles": 12
   },
@@ -106,7 +106,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-23T17:34:12+00:00",
+   "last_fetch": "2026-11-24T02:53:59+00:00",
    "last_error": null,
    "articles": 61
   }
