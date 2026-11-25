@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-11-25T11:16:14+00:00",
+ "generated_at": "2026-11-25T21:39:47+00:00",
  "ai": false,
  "model": "extractive",
  "translator": "argos ru-en (offline)",
- "articles": 113,
+ "articles": 119,
  "categories": [
   {
    "slug": "smr",
@@ -41,7 +41,7 @@
    "lang": "ru",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-25T11:16:12+00:00",
+   "last_fetch": "2026-11-25T21:39:43+00:00",
    "last_error": "Server disconnected without sending a response.",
    "articles": 13
   },
@@ -54,7 +54,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-25T11:16:11+00:00",
+   "last_fetch": "2026-11-25T21:39:43+00:00",
    "last_error": null,
    "articles": 5
   },
@@ -67,7 +67,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-25T11:16:11+00:00",
+   "last_fetch": "2026-11-25T21:39:43+00:00",
    "last_error": null,
    "articles": 17
   },
@@ -80,7 +80,7 @@
    "lang": "ru",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-25T11:16:11+00:00",
+   "last_fetch": "2026-11-25T21:39:43+00:00",
    "last_error": null,
    "articles": 9
   },
@@ -93,7 +93,7 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-25T11:16:12+00:00",
+   "last_fetch": "2026-11-25T21:39:43+00:00",
    "last_error": null,
    "articles": 12
   },
@@ -106,9 +106,9 @@
    "lang": "en",
    "builtin": 1,
    "enabled": 1,
-   "last_fetch": "2026-11-25T11:16:12+00:00",
+   "last_fetch": "2026-11-25T21:39:43+00:00",
    "last_error": null,
-   "articles": 67
+   "articles": 71
   }
  ]
 }
